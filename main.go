@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -16,15 +15,6 @@ type Measurement struct {
 	Count int
 	Total float64
 	Mean  float64
-}
-
-func round(num float64) int {
-	return int(num + math.Copysign(0.5, num))
-}
-
-func toFixed(num float64, precision int) float64 {
-	output := math.Pow(10, float64(precision))
-	return float64(round(num*output)) / output
 }
 
 func main() {
@@ -100,7 +90,7 @@ func main() {
 	w := bufio.NewWriter(writeFile)
 	for key, _ := range stations {
 		selectedStation := stations[key]
-		selectedStation.Mean = toFixed((selectedStation.Total / float64(selectedStation.Count)), 1)
+		selectedStation.Mean = (selectedStation.Total / float64(selectedStation.Count))
 		stations[key] = selectedStation
 		if err != nil {
 			panic(err)
